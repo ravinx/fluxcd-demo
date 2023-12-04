@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: dev
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: dev
+  secretRef:
+    name: flux-system
+  url: https://github.com/ravinx/fluxcd-demo.git
