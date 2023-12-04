@@ -1,2 +1,3 @@
 resources:
 - minio-repository.yaml
+- istio-repository.yaml
