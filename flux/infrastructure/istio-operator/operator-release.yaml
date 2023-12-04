@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: istio-base
+  namespace: istio-system
+spec:
+  values:
+    enableCRDTemplates: true
+  interval: 15m
+  chart:
+    spec:
+      version: "1.17.8"
+      chart: base
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: flux-system
+      interval: 30m
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: istio-operator
+  namespace: istio-system
+spec:
+  interval: 15m
+  values:
+    hub: gcr.io/istio-release
+    tag: 1.17.8
+  chart:
+    spec:
+      version: "1.17.8"
+      chart: ./manifests/charts/istio-operator
+      sourceRef:
+        kind: GitRepository
+        name: istio-repo
+        namespace: flux-system
+      interval: 30m
