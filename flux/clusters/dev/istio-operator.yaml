@@ -8,6 +8,7 @@ spec:
     - name: helm-repositories
     - name: namespaces
   interval: 2m0s
+
   path: ./flux/infrastructure/istio-operator
   prune: true
   sourceRef:
