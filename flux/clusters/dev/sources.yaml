@@ -5,7 +5,7 @@ metadata:
   name: helm-repositories
   namespace: flux-system
 spec:
-  interval: 10m0s
+  interval: 2m0s
   path: ./flux/infrastructure/sources
   prune: true
   sourceRef:
