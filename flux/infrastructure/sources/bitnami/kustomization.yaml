@@ -1,2 +1,2 @@
 resources:
-  - bitnami-repository.yaml
+- bitnami-repository.yaml
