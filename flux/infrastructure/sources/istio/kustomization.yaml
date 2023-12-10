@@ -1,3 +1,6 @@
 resources:
 #- minio-repository.yaml
 - istio-repository.yaml
+#  -  istio
+#  - minio
+#  - nginx

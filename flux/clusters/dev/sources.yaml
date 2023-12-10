@@ -2,11 +2,40 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: helm-repositories
+  name: helm-repositories-istio
   namespace: flux-system
 spec:
   interval: 2m0s
-  path: ./flux/infrastructure/sources
+  path: ./flux/infrastructure/sources/istio
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dev
+  wait: true
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: helm-repositories-nginx
+  namespace: flux-system
+spec:
+  interval: 2m0s
+  path: ./flux/infrastructure/sources/nginx
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dev
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: helm-repositories-minio
+  namespace: flux-system
+spec:
+  interval: 2m0s
+  path: ./flux/infrastructure/sources/minio
   prune: true
   sourceRef:
     kind: GitRepository
