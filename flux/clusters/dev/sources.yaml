@@ -17,11 +17,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: helm-repositories-nginx
+  name: helm-repositories-bitnami
   namespace: flux-system
 spec:
   interval: 2m0s
-  path: ./flux/infrastructure/sources/nginx
+  path: ./flux/infrastructure/sources/bitnami
   prune: true
   sourceRef:
     kind: GitRepository

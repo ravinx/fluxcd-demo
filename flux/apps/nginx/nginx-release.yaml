@@ -11,5 +11,5 @@ spec:
       chart: nginx
       sourceRef:
         kind: HelmRepository
-        name: bitnami-nginx
+        name: bitnami
         namespace: flux-system
