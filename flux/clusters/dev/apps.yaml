@@ -7,7 +7,7 @@ spec:
   dependsOn:
     - name: helm-repositories-bitnami
     - name: namespaces
-  interval: 5m0s
+  interval: 2m0s
 
   path: ./flux/apps/nginx
   prune: true
