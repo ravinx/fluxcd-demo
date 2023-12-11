@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     replicaCount: 2
-  interval: 1m
+  interval: 5m
   chart:
     spec:
       version: "15.4.4"
