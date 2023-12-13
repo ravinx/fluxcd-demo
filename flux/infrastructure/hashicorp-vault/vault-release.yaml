@@ -4,9 +4,9 @@ metadata:
   name: vault
 spec:
   interval: 5m
-  values:
-    ha:
-      enabled: true
+#  values:
+#    ha:
+#      enabled: true
 #    serverTelemetry:
 #      serviceMonitor:
 #        enabled: true
