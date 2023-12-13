@@ -1,6 +1,0 @@
-resources:
-#- minio-repository.yaml
-#- nginx-repository.yaml
-#  -  istio
-#  - minio
-#  - nginx
