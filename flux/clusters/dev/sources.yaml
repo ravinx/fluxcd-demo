@@ -41,3 +41,17 @@ spec:
     kind: GitRepository
     name: dev
   wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: helm-repositories-hashicorp
+  namespace: flux-system
+spec:
+  interval: 2m0s
+  path: ./flux/infrastructure/sources/hashicorp
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dev
+  wait: true

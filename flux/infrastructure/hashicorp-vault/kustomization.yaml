@@ -1,0 +1,4 @@
+namespace: hashicorp-vault
+resources:
+- vault-release.yaml
+
