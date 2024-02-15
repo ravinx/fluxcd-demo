@@ -1,28 +1,21 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: app-nginx
-  namespace: nginx
+  name: nginx-ingress-app
 spec:
-  values:
-    replicaCount: 1
-  interval: 10m
-  timeout: 5m
+  releaseName: nginx-ingress1
   chart:
     spec:
-      version: "15.4.4"
-      chart: nginx
+      chart: ingress-nginx
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: ingress-nginx
         namespace: flux-system
-      interval: 5m
+      version: "3.23.0"
+  interval: 30m
   install:
     remediation:
       retries: 3
-  upgrade:
-    remediation:
-      retries: 3
-  test:
-    enable: true
-
+  values:
+    controller:
+    kind: Deployment
