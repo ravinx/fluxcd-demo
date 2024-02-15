@@ -1,4 +1,4 @@
-#namespace: nginx
-#resources:
-#- nginx-release.yaml
+namespace: nginx
+resources:
+- nginx-release.yaml
 

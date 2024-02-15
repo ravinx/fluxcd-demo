@@ -1,2 +1,2 @@
-resources:
-- hashicorp-repository.yaml
+#resources:
+#- hashicorp-repository.yaml
