@@ -20,10 +20,9 @@ spec:
   install:
     remediation:
       retries: 3
-    upgrade:
-      remediation:
-        retries: 3
-    test:
-      enable: true
-    driftDetection:
-      mode: enabled
+  upgrade:
+    remediation:
+      retries: 3
+  test:
+    enable: true
+
