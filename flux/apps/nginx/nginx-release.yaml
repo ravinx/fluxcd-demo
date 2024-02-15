@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     replicaCount: 1
-  interval: 5m
+  interval: 10m
   chart:
     spec:
       version: "15.4.4"
@@ -15,4 +15,4 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      interval: 1m
+      interval: 5m

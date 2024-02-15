@@ -5,7 +5,7 @@ metadata:
   name: helm-repositories-istio
   namespace: flux-system
 spec:
-  interval: 2m0s
+  interval: 10m0s
   path: ./flux/infrastructure/sources/istio
   prune: true
   sourceRef:
@@ -20,7 +20,7 @@ metadata:
   name: helm-repositories-bitnami
   namespace: flux-system
 spec:
-  interval: 2m0s
+  interval: 10m0s
   path: ./flux/infrastructure/sources/bitnami
   prune: true
   sourceRef:
@@ -34,7 +34,7 @@ metadata:
   name: helm-repositories-minio
   namespace: flux-system
 spec:
-  interval: 2m0s
+  interval: 10m0s
   path: ./flux/infrastructure/sources/minio
   prune: true
   sourceRef:
@@ -48,7 +48,7 @@ metadata:
   name: helm-repositories-hashicorp
   namespace: flux-system
 spec:
-  interval: 2m0s
+  interval: 10m0s
   path: ./flux/infrastructure/sources/hashicorp
   prune: true
   sourceRef:
