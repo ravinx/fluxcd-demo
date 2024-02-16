@@ -1,3 +1,4 @@
 namespace: nginx
 resources:
-- nginx-release.yaml
+- nginx1.yaml
+- nginx2.yaml
