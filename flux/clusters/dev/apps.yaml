@@ -15,3 +15,22 @@ spec:
     name: dev
   wait: true
   timeout: 15m
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: app-nginx2
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: helm-repositories-bitnami
+    - name: namespaces
+  interval: 10m0s
+  path: ./flux/apps/nginx2
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dev
+  wait: true
+  timeout: 15m
