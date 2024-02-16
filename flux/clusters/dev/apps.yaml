@@ -14,3 +14,4 @@ spec:
     kind: GitRepository
     name: dev
   wait: true
+  timeout: 15m
