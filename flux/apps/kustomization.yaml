@@ -1,4 +1,4 @@
 resources:
 - nginx
-- nginx2
-- apache
+#- nginx2
+#- apache
