@@ -7,7 +7,33 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: dev
+    tag: dev
+  secretRef:
+    name: flux-system
+  url: https://github.com/ravinx/fluxcd-demo.git
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: dev2
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    tag: dev2
+  secretRef:
+    name: flux-system
+  url: https://github.com/ravinx/fluxcd-demo.git
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: dev3
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    tag: dev3
   secretRef:
     name: flux-system
   url: https://github.com/ravinx/fluxcd-demo.git

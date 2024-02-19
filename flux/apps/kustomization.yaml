@@ -1,4 +1,5 @@
 resources:
 #- nginx
 #- nginx2
-- apache
+#- apache
+- nginx-app
