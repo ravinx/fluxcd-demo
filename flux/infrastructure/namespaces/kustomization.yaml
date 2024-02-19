@@ -1,4 +1,5 @@
 resources:
 - istio.yaml
 - nginx.yaml
+- apache.yaml
 # - hashicorp-vault.yaml
