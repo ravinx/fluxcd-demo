@@ -2,4 +2,5 @@ resources:
 - istio.yaml
 - nginx.yaml
 - apache.yaml
+- external-secrets.yaml
 # - hashicorp-vault.yaml
