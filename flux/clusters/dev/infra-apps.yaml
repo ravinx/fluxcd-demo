@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: infra-apps
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: helm-repositories-external-secrets
+    - name: helm-repositories-istio
+    - name: namespaces
+  interval: 10m0s
+  path: ./flux/infrastructure/infra-apps
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dev
+  wait: true
+
