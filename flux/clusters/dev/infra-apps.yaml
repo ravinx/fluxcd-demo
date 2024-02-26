@@ -16,4 +16,3 @@ spec:
     kind: GitRepository
     name: dev
   wait: true
-
