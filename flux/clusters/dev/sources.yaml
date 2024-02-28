@@ -54,5 +54,5 @@ spec:
     kind: GitRepository
     name: dev
 #  force: true
-#  prune: true
+  prune: true
 #  validation: client
