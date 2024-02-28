@@ -1,3 +1,7 @@
 resources:
 - external-secrets
 - istio-operator
+<<<<<<< Updated upstream
+=======
+#- crossplane
+>>>>>>> Stashed changes
