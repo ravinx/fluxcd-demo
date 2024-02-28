@@ -10,5 +10,5 @@ spec:
   prune: false
   sourceRef:
     kind: GitRepository
-    name: master2
+    name: dev
   wait: true
