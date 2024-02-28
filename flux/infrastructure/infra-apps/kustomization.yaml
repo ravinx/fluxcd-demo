@@ -1,4 +1,4 @@
 resources:
-#- external-secrets
+- external-secrets
 - istio-operator
 #- crossplane

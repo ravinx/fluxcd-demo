@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-#    - name: helm-repositories-external-secrets
+    - name: helm-repositories-external-secrets
     - name: helm-repositories-istio
     - name: namespaces
   interval: 10m0s
