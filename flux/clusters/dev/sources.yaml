@@ -53,6 +53,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: dev
-  force: true
-  prune: true
-  validation: client
+#  force: true
+#  prune: true
+#  validation: client

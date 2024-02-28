@@ -11,5 +11,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: dev
-  force: true
-  validation: client
+#  force: true
+#  validation: client
