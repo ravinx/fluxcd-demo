@@ -50,6 +50,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/infrastructure/sources/crossplane
+  prune: true
   sourceRef:
     kind: GitRepository
     name: dev
@@ -63,6 +64,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./flux/infrastructure/sources/keda
+  prune: true
   sourceRef:
     kind: GitRepository
     name: dev
