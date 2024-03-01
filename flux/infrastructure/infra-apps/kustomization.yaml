@@ -2,4 +2,4 @@ resources:
 - external-secrets
 - keda
 #- istio-operator
-#- crossplane
+- crossplane
