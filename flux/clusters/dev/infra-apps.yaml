@@ -9,7 +9,7 @@ spec:
     - name: helm-repositories-external-secrets
 #    - name: helm-repositories-istio
     - name: helm-repositories-crossplane
-    - name: helm-repositories-keda
+#    - name: helm-repositories-keda
     - name: namespaces
   interval: 10m0s
   path: ./flux/infrastructure/infra-apps
