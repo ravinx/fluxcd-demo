@@ -3,5 +3,5 @@ resources:
 - nginx.yaml
 - apache.yaml
 - external-secrets.yaml
-#- keda.yaml
+- keda.yaml
 # - hashicorp-vault.yaml

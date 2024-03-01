@@ -1,5 +1,5 @@
 resources:
 - external-secrets
-#- keda
+- keda
 #- istio-operator
 - crossplane
