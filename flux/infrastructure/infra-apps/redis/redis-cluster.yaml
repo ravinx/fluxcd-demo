@@ -37,6 +37,10 @@ spec:
         limits:
           cpu: "0.1"
           memory: "300Mi"
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
   chart:
     spec:
       version: "17.17.1"
