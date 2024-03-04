@@ -41,6 +41,15 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+        additionalEndpoints:
+         - interval: "30s"
+           path: "/scrape"
+           port: "metrics"
+           params:
+             target: ["localhost:26379"]
+           metricRelabelings:
+             - targetLabel: "app"
+               replacement: "sentinel"
   chart:
     spec:
       version: "17.17.1"
