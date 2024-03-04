@@ -3,3 +3,4 @@ resources:
 - external-secrets.yaml
 - keda.yaml
 - crossplane.yaml
+- redis.yaml
