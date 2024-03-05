@@ -4,3 +4,4 @@ resources:
 - keda.yaml
 - crossplane.yaml
 - redis.yaml
+- monitoring.yaml
