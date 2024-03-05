@@ -41,6 +41,8 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+        additionalLabels:
+          - release: "kube-prometheus"
   chart:
     spec:
       version: "17.17.1"
