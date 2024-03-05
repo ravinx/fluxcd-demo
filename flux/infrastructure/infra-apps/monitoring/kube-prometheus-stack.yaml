@@ -20,11 +20,11 @@ spec:
         retention: 1h
         resources:
           requests:
-            cpu: 0.05
-            memory: 200Mi
+            cpu: "0.05"
+            memory: "200Mi"
           limits:
-            cpu: 1
-            memory: 500Mi
+            cpu: "1"
+            memory: "500Mi"
         ruleSelector:
           matchLabels:
             prometheus: k8s
