@@ -6,8 +6,34 @@ metadata:
 spec:
   interval: 5m
   values:
+    global:
+      rbac:
+        createAggregateClusterRoles: true
     metrics:
       enabled: true
+    prometheus:
+      prometheusSpec:
+        enableRemoteWriteReceiver: true
+        enableFeatures:
+          - exemplar-storage
+        podMonitorSelector: {}
+        retention: 1h
+        resources:
+          requests:
+            cpu: 0.05
+            memory: 200Mi
+          limits:
+            cpu: 1
+            memory: 500Mi
+        ruleSelector:
+          matchLabels:
+            prometheus: k8s
+            role: alert-rules
+        securityContext:
+          fsGroup: 2000
+          runAsNonRoot: true
+          runAsUser: 1000
+        serviceMonitorSelector: {}
   chart:
     spec:
       version: "54.2.1"
