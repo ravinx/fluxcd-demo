@@ -34,6 +34,7 @@ spec:
           runAsNonRoot: true
           runAsUser: 1000
         serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
   chart:
     spec:
       version: "54.2.1"
