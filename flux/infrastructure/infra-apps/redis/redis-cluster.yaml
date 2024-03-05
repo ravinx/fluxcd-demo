@@ -41,17 +41,15 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-        additionalLabels:
-          - release: prometheus-stack
-        metricRelabelings:
-          - targetLabel: "app"
-            replacement: "sentinel"
-#        additionalEndpoints:
-#         - interval: "30s"
-#           path: "/scrape"
-#           port: "metrics"
-#           params:
-#             target: ["localhost:26379"]
+#        additionalLabels:
+#          - release: prometheus-stack
+#        metricRelabelings:
+#          - targetLabel: "app"
+#            replacement: "sentinel"
+#      podMonitor:
+#        enabled: true
+#        additionalLabels:
+#          - release: prometheus-stack
   chart:
     spec:
       version: "17.17.1"
