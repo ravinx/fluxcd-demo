@@ -18,4 +18,4 @@ spec:
     kind: GitRepository
     name: dev
   force: true
-  validation: client
+#  validation: client
