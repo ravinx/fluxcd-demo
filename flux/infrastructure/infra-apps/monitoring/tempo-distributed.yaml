@@ -1,0 +1,110 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tempo-distributed
+spec:
+  interval: 15m
+  timeout: 30m
+  values:
+    traces:
+      otlp:
+        grpc:
+          enabled: true
+      jaeger:
+        grpc:
+          enabled: true
+        thriftHttp:
+          enabled: true
+      zipkin:
+        enabled: true
+    ingester:
+      replicas: 3
+      resources:
+        requests:
+          memory: 50Mi
+          cpu: 20m
+      # Do we need persistence in other envs besides prod ?
+      # persistence:
+      #   enabled: true
+      #   size: 100Gi
+      #   storageClass: grafana-storage-class
+    # overrides: |
+    #   overrides:
+    #     "*":
+    #         ingestion_burst_size_bytes: 5_000_000
+    #         ingestion_rate_limit_bytes: 40_000_000
+    #         max_bytes_per_trace: 25_000_000
+    #         max_traces_per_user: 10000
+    storage:
+      trace:
+        backend: filesystem
+    serviceAccount:
+      name: "grafana-tempo"
+    distributor:
+      replicas: 1
+      resources:
+        requests:
+          memory: 50Mi
+          cpu: 5m
+        limits:
+          memory: 100Mi
+    compactor:
+      resources:
+        requests:
+          memory: 50Mi
+          cpu: 5m
+        limits:
+          memory: 100Mi
+    querier:
+      frontend_worker:
+        grpc_client_config:
+          max_recv_msg_size: 33554432
+          max_send_msg_size: 33554432
+      resources:
+        requests:
+          memory: 50Mi
+          cpu: 5m
+        limits:
+          memory: 50Mi
+    search:
+      enabled: true
+    minio:
+      enabled: false
+    metaMonitoring:
+      serviceMonitor:
+        enabled: true
+    # Configuration for the metrics-generator
+#    metricsGenerator:
+#      enabled: true
+#      replicas: 1
+#      resources:
+#        requests:
+#          memory: 50Mi
+#          cpu: 5m
+#      config:
+#        storage:
+#          remote_write:
+#            - url: http://mimir-nginx.monitoring.svc/api/v1/push
+#              send_exemplars: true
+#        processor:
+#          service_graphs:
+#            max_items: 10000
+#            wait: 10s
+#            workers: 10
+#          span_metrics:
+#            histogram_buckets: [0.002, 0.004, 0.008, 0.016, 0.032, 0.064, 0.128, 0.256, 0.512, 1.02, 2.05, 4.10]
+#    global_overrides:
+#      metrics_generator_processors: [service-graphs, span-metrics]
+#      ingestion_burst_size_bytes: 5_000_000
+#      ingestion_rate_limit_bytes: 40_000_000
+#      max_bytes_per_trace: 25_000_000
+#      max_traces_per_user: 10000
+  chart:
+    spec:
+      version: "1.8.0"
+      chart: tempo-distributed
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+      interval: 5m
