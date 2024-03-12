@@ -36,7 +36,9 @@ spec:
       enabled: true
       replicas: 1
     minio:
-      enabled: false
+      enabled: true
+      persistence:
+        size: 5Gi
     store_gateway:
       persistentVolume:
         size: 5Gi
