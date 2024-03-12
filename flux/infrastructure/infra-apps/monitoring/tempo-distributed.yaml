@@ -72,6 +72,11 @@ spec:
     metaMonitoring:
       serviceMonitor:
         enabled: true
+    storage:
+      trace:
+        backend: local
+      admin:
+        backend: filesystem
     # Configuration for the metrics-generator
 #    metricsGenerator:
 #      enabled: true
