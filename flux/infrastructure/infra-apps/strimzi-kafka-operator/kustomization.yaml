@@ -1,0 +1,6 @@
+resources:
+# download
+# LATEST_STRIMZI_VERSION=$(curl --silent "https://api.github.com/repos/strimzi/strimzi-kafka-operator/releases/latest" | jq -r .tag_name)
+# wget -O strimzi-crds.yaml https://github.com/strimzi/strimzi-kafka-operator/releases/download/${LATEST_STRIMZI_VERSION}/strimzi-crds-${LATEST_STRIMZI_VERSION}.yaml
+  - strimzi-crds.yaml
+  - strimzi-kafka-operator.yaml

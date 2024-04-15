@@ -5,3 +5,4 @@ resources:
 - crossplane.yaml
 - redis.yaml
 - monitoring.yaml
+- strimzi.yaml
