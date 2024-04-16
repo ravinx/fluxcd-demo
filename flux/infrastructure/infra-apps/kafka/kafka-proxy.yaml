@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: kafka-proxy
+spec:
+  selector:
+    matchLabels:
+      app: kafka-proxy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka-proxy
+      annotations:
+        prometheus.io/scrape: 'true'
+    spec:
+      containers:
+        - name: kafka-proxy
+          image: grepplabs/kafka-proxy:latest@sha256:20cfb6b2760ab99bfdb4242f0ad6d751366379a4f0bb28e8a8915b11f26c5149
+          args:
+            - 'server'
+            - '--log-format=json'
+            - '--bootstrap-server-mapping=$(KAFKA_CLUSTER_NAME)-kafka-0.$(KAFKA_CLUSTER_NAME)-kafka-brokers.kafka.svc:9092,127.0.0.1:19092'
+            - '--bootstrap-server-mapping=$(KAFKA_CLUSTER_NAME)-kafka-1.$(KAFKA_CLUSTER_NAME)-kafka-brokers.kafka.svc:9092,127.0.0.1:19093'
+            - '--bootstrap-server-mapping=$(KAFKA_CLUSTER_NAME)-kafka-2.$(KAFKA_CLUSTER_NAME)-kafka-brokers.kafka.svc:9092,127.0.0.1:19094'
+            - '--proxy-request-buffer-size=512'
+            - '--proxy-response-buffer-size=512'
+            - '--proxy-listener-read-buffer-size=512'
+            - '--proxy-listener-write-buffer-size=512'
+            - '--kafka-connection-read-buffer-size=512'
+            - '--kafka-connection-write-buffer-size=512'
+          ports:
+          - name: metrics
+            containerPort: 9080
+          - name: kafka-0
+            containerPort: 19092
+          - name: kafka-1
+            containerPort: 19093
+          - name: kafka-2
+            containerPort: 19094
+          env:
+            - name: KAFKA_CLUSTER_NAME
+              value: "dev"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9080
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 5
+          resources:
+            requests:
+              memory: 16Mi
+              cpu: 10m
+            limits:
+              memory: 64Mi
+              cpu: 100m
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-proxy
+spec:
+  type: ClusterIP
+  selector:
+    app: kafka-proxy
+  ports:
+    - name: kafka-0
+      protocol: TCP
+      port: 19092
+      targetPort: 19092
+    - name: kafka-1
+      protocol: TCP
+      port: 19093
+      targetPort: 19093
+    - name: kafka-2
+      protocol: TCP
+      port: 19094
+      targetPort: 19094
