@@ -9,6 +9,20 @@ spec:
     template:
       pod:
         terminationGracePeriodSeconds: 300
+        tolerations:
+          - key: "reserved"
+            value: "kafka"
+            operator: "Equal"
+            effect: "PreferNoSchedule"
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: "reserved"
+                      operator: In
+                      values:
+                        - "kafka"
     resources:
       requests:
         memory: "512Mi"
@@ -53,7 +67,20 @@ spec:
   zookeeper:
     template:
       pod:
-        terminationGracePeriodSeconds: 300
+        tolerations:
+          - key: "reserved"
+            value: "kafka"
+            operator: "Equal"
+            effect: "PreferNoSchedule"
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: "reserved"
+                      operator: In
+                      values:
+                        - "kafka"
     resources:
       requests:
         memory: "512Mi"
