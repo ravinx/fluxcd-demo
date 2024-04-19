@@ -35,6 +35,8 @@ spec:
           runAsUser: 1000
         serviceMonitorSelector: {}
         serviceMonitorNamespaceSelector: {}
+    grafana:
+      enabled: true
   chart:
     spec:
       version: "54.2.1"
