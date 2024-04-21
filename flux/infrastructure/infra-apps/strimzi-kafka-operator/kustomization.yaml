@@ -4,3 +4,4 @@ resources:
 # wget -O strimzi-crds.yaml https://github.com/strimzi/strimzi-kafka-operator/releases/download/${LATEST_STRIMZI_VERSION}/strimzi-crds-${LATEST_STRIMZI_VERSION}.yaml
   - strimzi-crds.yaml
   - strimzi-kafka-operator.yaml
+namespace: strimzi-operator
