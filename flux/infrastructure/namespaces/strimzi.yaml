@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: strimzi
+  name: strimzi-operator
   labels:
-    name: strimzi
+    name: strimzi-operator
