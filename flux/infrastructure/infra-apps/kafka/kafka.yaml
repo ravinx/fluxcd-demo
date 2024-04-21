@@ -107,8 +107,8 @@ spec:
     config:
       cpu.capacity.threshold: 0.9
     brokerCapacity:
-      inboundNetwork: 0.1GiB/s
-      outboundNetwork: 0.1GiB/s
+      inboundNetwork: 100MiB/s
+      outboundNetwork: 100MiB/s
     resources:
       requests:
         memory: "200Mi"
