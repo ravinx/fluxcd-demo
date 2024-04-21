@@ -16,7 +16,9 @@ spec:
         enableRemoteWriteReceiver: true
         enableFeatures:
           - exemplar-storage
-        podMonitorSelector: {}
+        podMonitorSelector:
+          matchLabels:
+            app: strimzi
         retention: 1h
         resources:
           requests:
