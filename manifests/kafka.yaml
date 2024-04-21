@@ -9,6 +9,7 @@ spec:
     template:
       pod:
         terminationGracePeriodSeconds: 300
+    resources:
       requests:
         memory: "512Mi"
         cpu: "1"
