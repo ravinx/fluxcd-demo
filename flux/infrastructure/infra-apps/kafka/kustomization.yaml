@@ -2,4 +2,5 @@ resources:
   - kafka.yaml
   - kafka-proxy.yaml
   - kafka-monitoring-cm.yaml
+  - kafka-topic.yaml
 namespace: strimzi-operator
