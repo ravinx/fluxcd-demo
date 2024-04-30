@@ -11,6 +11,7 @@ def create_client_id():
 kafka_config = {
     'bootstrap.servers': '127.0.0.1:19092',  # Replace with your Kafka proxy address and port
     'client.id': create_client_id(),
+    'default.topic.config': {'api.version.request': True},
     'security.protocol': 'PLAINTEXT',  # No encryption or SSL
 }
 
