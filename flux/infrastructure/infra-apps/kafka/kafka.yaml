@@ -17,7 +17,7 @@ spec:
         cpu: "1"
       limits:
         memory: "1Gi"
-    replicas: 3
+    replicas: 2
     listeners:
       - name: plain
         port: 9092
@@ -78,6 +78,7 @@ spec:
   cruiseControl:
     config:
       cpu.capacity.threshold: 0.9
+      webserver.security.enable: false
     brokerCapacity:
       inboundNetwork: 1GiB/s
       outboundNetwork: 1GiB/s
