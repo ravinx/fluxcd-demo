@@ -17,7 +17,7 @@ spec:
         cpu: "1"
       limits:
         memory: "1Gi"
-    replicas: 2
+    replicas: 3
     listeners:
       - name: plain
         port: 9092
