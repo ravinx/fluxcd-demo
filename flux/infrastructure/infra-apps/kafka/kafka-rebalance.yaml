@@ -1,0 +1,16 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaRebalance
+metadata:
+  name: kafka-rebalance
+  namespace: strimzi-operator
+  labels:
+    strimzi.io/cluster: dev
+spec:
+  goals:
+    - "RackAwareGoal"
+    - "CpuCapacityGoal"
+    - "DiskCapacityGoal"
+    - "NetworkInboundCapacityGoal"
+    - "NetworkOutboundCapacityGoal"
+    - "ReplicaCapacityGoal"
+  mode: "full"  # "full" initiates a complete rebalance; other options include "incremental" or "add_broker"

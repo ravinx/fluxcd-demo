@@ -1,0 +1,23 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaRebalance
+metadata:
+  name: kafka-rebalance-add-broker
+  namespace: strimzi-operator
+  labels:
+    strimzi.io/cluster: dev
+  annotations:
+    strimzi.io/rebalance-auto-approval: "true"
+spec:
+  goals:
+    - "RackAwareGoal"
+    - "CpuCapacityGoal"
+    - "DiskCapacityGoal"
+    - "NetworkInboundCapacityGoal"
+    - "NetworkOutboundCapacityGoal"
+    - "ReplicaCapacityGoal"
+  mode: "add-brokers"  # "full" initiates a complete rebalance; other options include "incremental" or "add_broker"
+  brokers:
+    - 1
+    - 2  # Broker ID of a new broker
+    - 3  # Broker ID of another new broker
+    - 4

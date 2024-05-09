@@ -1,18 +1,17 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
 metadata:
-  name: kafka
+  name: kraft-controller
   labels:
     strimzi.io/cluster: dev
 spec:
-  replicas: 0
+  replicas: 1
   roles:
-    - broker
+    - controller
   storage:
     type: jbod
     volumes:
       - id: 0
         type: persistent-claim
-        size: 10Gi
+        size: 15Gi
         deleteClaim: false
-        class: storage-rwo

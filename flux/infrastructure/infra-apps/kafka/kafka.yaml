@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/name: kafka
 spec:
   kafka:
+    version: 3.7.0
     template:
       pod:
         terminationGracePeriodSeconds: 300
@@ -36,6 +37,8 @@ spec:
       min.insync.replicas: 2
       auto.create.topics.enable: false
       log.roll.hours: 24
+      inter.broker.protocol.version: "3.7"
+      log.message.format.version: "3.7"
     livenessProbe:
       initialDelaySeconds: 60
     storage:
