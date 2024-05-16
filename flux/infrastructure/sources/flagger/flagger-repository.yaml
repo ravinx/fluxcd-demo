@@ -5,5 +5,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: oci://ghcr.io/fluxcd/charts
-  type: oci
+  url: https://github.com/fluxcd/flagger
