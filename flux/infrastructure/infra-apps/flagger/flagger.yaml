@@ -13,7 +13,7 @@ spec:
     crds: CreateReplace
   chart:
     spec:
-      chart: flagger/flagger
+      chart: flagger
       version: 1.37.0 # update Flagger to the latest minor version
       interval: 5m # scan for new versions every six hours
       sourceRef:
