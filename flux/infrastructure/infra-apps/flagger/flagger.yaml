@@ -20,8 +20,8 @@ spec:
         kind: HelmRepository
         name: flagger
         namespace: flux-system
-      verify: # verify the chart signature with Cosign keyless
-        provider: cosign
+#      verify: # verify the chart signature with Cosign keyless
+#        provider: cosign
   values:
     nodeSelector:
       kubernetes.io/os: linux
