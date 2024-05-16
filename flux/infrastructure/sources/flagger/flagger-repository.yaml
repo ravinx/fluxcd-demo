@@ -5,4 +5,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  url: https://github.com/fluxcd/flagger
+  url: https://flagger.app
