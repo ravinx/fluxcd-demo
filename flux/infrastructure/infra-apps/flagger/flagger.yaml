@@ -15,7 +15,7 @@ spec:
     spec:
       chart: flagger
       version: 1.37.0 # update Flagger to the latest minor version
-      interval: 6h # scan for new versions every six hours
+      interval: 5m # scan for new versions every six hours
       sourceRef:
         kind: HelmRepository
         name: flagger
