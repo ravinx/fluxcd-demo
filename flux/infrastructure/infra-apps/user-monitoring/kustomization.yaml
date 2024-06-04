@@ -1,4 +1,4 @@
-namespace: monitoring
+namespace: user-monitoring
 resources:
 #- flux-podmonitor.yaml
 - kube-prometheus-stack.yaml
