@@ -49,6 +49,13 @@ spec:
         serviceMonitorNamespaceSelector: {}
     grafana:
       enabled: true
+      resources:
+        requests:
+          cpu: "0.08"
+          memory: "50Mi"
+        limits:
+          cpu: "10m"
+          memory: "100Mi"
   chart:
     spec:
       version: "54.2.1"
