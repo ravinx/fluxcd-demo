@@ -5,6 +5,14 @@ metadata:
   name: kube-prometheus
 spec:
   interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  test:
+    enable: true
   driftDetection:
     mode: enabled
   values:
@@ -28,7 +36,7 @@ spec:
             memory: "500Mi"
           limits:
             cpu: "1"
-            memory: "700Mi"
+            memory: "600Mi"
         ruleSelector:
           matchLabels:
             prometheus: k8s
