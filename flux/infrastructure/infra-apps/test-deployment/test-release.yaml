@@ -9,7 +9,7 @@ spec:
   timeout: 5m
   chart:
     spec:
-      chart: podinfo
+      chart: podinfo/podinfo
       version: '6.5.*'
       sourceRef:
         kind: HelmRepository
