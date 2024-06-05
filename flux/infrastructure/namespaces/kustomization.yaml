@@ -8,4 +8,4 @@ resources:
 - strimzi.yaml
 - kafka.yaml
 - flagger.yaml
-#- test-deployment.yaml
+- test-deployment.yaml
