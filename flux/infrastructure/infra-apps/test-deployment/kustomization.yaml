@@ -1,0 +1,3 @@
+resources:
+  - test-release.yaml
+namespace: test-deployment
