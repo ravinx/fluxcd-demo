@@ -52,10 +52,10 @@ spec:
       resources:
         requests:
           cpu: "0.08"
-          memory: "50Mi"
+          memory: "200Mi"
         limits:
           cpu: "0.09"
-          memory: "100Mi"
+          memory: "500Mi"
   chart:
     spec:
       version: "54.2.1"
