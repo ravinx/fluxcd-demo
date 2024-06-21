@@ -4,7 +4,7 @@ resources:
 - keda.yaml
 - crossplane.yaml
 - redis.yaml
-- monitoring.yaml
+#- monitoring.yaml
 - strimzi.yaml
 - kafka.yaml
 - flagger.yaml
