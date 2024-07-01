@@ -6,8 +6,10 @@ metadata:
   labels:
     strimzi.io/cluster: dev
   annotations:
-    strimzi.io/rebalance-auto-approval: "true"
+    strimzi.io/rebalance-auto-approval: "false"
 spec:
   mode: "remove-brokers"  # "full" initiates a complete rebalance; other options include "incremental" or "add_broker"
   brokers:
     - 0
+    - 1
+    - 2
