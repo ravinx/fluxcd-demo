@@ -13,7 +13,7 @@ spec:
     volumes:
       - id: 0
         type: persistent-claim
-        size: 20Gi
+        size: 25Gi
         deleteClaim: false
   resources: # (6)
       requests:

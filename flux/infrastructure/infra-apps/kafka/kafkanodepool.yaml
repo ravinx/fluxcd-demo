@@ -1,18 +1,18 @@
-#apiVersion: kafka.strimzi.io/v1beta2
-#kind: KafkaNodePool
-#metadata:
-#  name: kafka
-#  labels:
-#    strimzi.io/cluster: dev
-#spec:
-#  replicas: 0
-#  roles:
-#    - broker
-#  storage:
-#    type: jbod
-#    volumes:
-#      - id: 0
-#        type: persistent-claim
-#        size: 10Gi
-#        deleteClaim: false
-#        class: storage-rwo
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: kafka
+  labels:
+    strimzi.io/cluster: dev
+spec:
+  replicas: 0
+  roles:
+    - broker
+  storage:
+    type: jbod
+    volumes:
+      - id: 0
+        type: persistent-claim
+        size: 10Gi
+        deleteClaim: false
+        class: storage-rwo
