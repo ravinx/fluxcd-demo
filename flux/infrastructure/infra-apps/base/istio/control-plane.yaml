@@ -2,6 +2,10 @@ apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
   namespace: istio-system
-  name: istio-operator
+  name: cluster-controlplane
 spec:
-  profile: default
+  components:
+    ingressGateways:
+      - name: istio-ingressgateway
+        enabled: true
+        namespace: istio-apps
