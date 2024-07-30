@@ -4,8 +4,7 @@ metadata:
   namespace: istio-system
   name: cluster-controlplane
 spec:
-  components:
-    ingressGateways:
-      - name: istio-ingressgateway
-        enabled: true
-        namespace: istio-apps
+  profile: default
+  values:
+    global:
+      istioNamespace: istio-system
