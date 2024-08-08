@@ -1,0 +1,69 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: cluster-controlplane-1-18-7
+spec:
+  revision: 1-18-7
+  profile: default
+  tag: 1.18.7
+  components:
+    pilot:
+      k8s:
+        hpaSpec:
+          maxReplicas: 6
+          minReplicas: 2
+          behavior:
+            scaleDown:
+              policies:
+                - periodSeconds: 120
+                  type: Pods
+                  value: 1
+              stabilizationWindowSeconds: 300
+            scaleUp:
+              policies:
+                - periodSeconds: 60
+                  type: Pods
+                  value: 1
+              stabilizationWindowSeconds: 120
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+    ingressGateways:
+      - name: istio-tools
+        enabled: true
+        k8s:
+          hpaSpec:
+            minReplicas: 2
+            maxReplicas: 5
+            behavior:
+              scaleDown:
+                policies:
+                  - periodSeconds: 120
+                    type: Pods
+                    value: 1
+                stabilizationWindowSeconds: 300
+              scaleUp:
+                policies:
+                  - periodSeconds: 60
+                    type: Pods
+                    value: 1
+                stabilizationWindowSeconds: 120
+#          service:
+#            selector:
+#              app: istio-ingressgateway
+#              istio: ingressgateway
+#              service.istio.io/canonical-name: istio-tools
+#            loadBalancerIP: X.X.X.X # OVERLAY
+#            externalTrafficPolicy: Local
+          resources:
+            limits:
+              cpu: "2"
+              memory: 1Gi
+            requests:
+              cpu: 700m # all other values are defaults, this was raised to reduce automatic HPA trigger and 100% usage
+              memory: 128Mi
+  values:
+    global:
+      istioNamespace: istio-system
