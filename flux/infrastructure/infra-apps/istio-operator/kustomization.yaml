@@ -1,3 +1,3 @@
 resources:
-#- operator-release.yaml
+- operator-release.yaml
 #- kiali-operator.yaml
