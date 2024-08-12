@@ -5,7 +5,7 @@ metadata:
   name: cluster-controlplane
 spec:
   profile: default
-  tag: 1.17.8
+  tag: 1.18.7
   components:
     pilot:
       k8s:
