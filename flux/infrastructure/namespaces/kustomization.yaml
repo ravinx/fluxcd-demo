@@ -1,5 +1,5 @@
 resources:
-- istio.yaml
+#- istio.yaml
 - external-secrets.yaml
 - keda.yaml
 - crossplane.yaml
