@@ -54,6 +54,6 @@ spec:
       chart: ./manifests/charts/istio-operator
       sourceRef:
         kind: GitRepository
-        name: istio-repo-1-18-7
+        name: istio-base-repo-1-18-7
         namespace: flux-system
       interval: 1m
