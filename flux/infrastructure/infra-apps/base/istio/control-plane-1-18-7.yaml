@@ -1,7 +1,7 @@
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
-  namespace: istio-system
+  namespace: istio-system-canary
   name: cluster-controlplane-1-18-7
 spec:
   revision: 1-18-7
@@ -9,6 +9,7 @@ spec:
   tag: 1.18.7
   components:
     pilot:
+      namespace: istio-system-canary
       k8s:
         hpaSpec:
           maxReplicas: 6
@@ -32,6 +33,7 @@ spec:
             memory: "128Mi"
     ingressGateways:
       - name: istio-tools
+        namespace: istio-system-canary
         enabled: true
         k8s:
           hpaSpec:
