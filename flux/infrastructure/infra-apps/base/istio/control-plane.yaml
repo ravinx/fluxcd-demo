@@ -1,9 +1,10 @@
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
-  namespace: istio-system
+  namespace: istio-system-canary
   name: cluster-controlplane
 spec:
+  revision: 1-17-8
   profile: default
   tag: 1.17.8
   components:
@@ -30,6 +31,8 @@ spec:
             cpu: "100m"
             memory: "128Mi"
     ingressGateways:
+      - name: istio-ingressgateway
+        enabled: false
       - name: istio-tools
         enabled: true
         k8s:
