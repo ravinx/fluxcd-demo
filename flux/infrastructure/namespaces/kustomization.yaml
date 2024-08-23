@@ -1,6 +1,6 @@
 resources:
 - istio.yaml
-- istio-canary.yaml
+#- istio-canary.yaml
 - external-secrets.yaml
 - keda.yaml
 - crossplane.yaml
