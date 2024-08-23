@@ -1,0 +1,4 @@
+namespace: istio-system-canary
+resources:
+- operator-release.yaml
+#- kiali-operator.yaml
