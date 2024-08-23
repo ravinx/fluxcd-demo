@@ -1,10 +1,10 @@
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
-  namespace: istio-system-canary
+  namespace: istio-system
   name: cluster-controlplane
 spec:
-  revision: 1-17-8
+#  revision: 1-17-8
   profile: default
   tag: 1.17.8
   components:
