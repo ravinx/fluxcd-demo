@@ -23,6 +23,7 @@ metadata:
   name: istio-operator
   namespace: istio-system-canary
 spec:
+  targetNamespace: istio-system-canary
   interval: 1m
   values:
     hub: gcr.io/istio-release
