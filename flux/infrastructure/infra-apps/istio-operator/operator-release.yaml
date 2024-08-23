@@ -44,9 +44,12 @@ metadata:
   name: istio-operator-1-18-7
   namespace: istio-system-canary
 spec:
+  releaseName: istio-system-canary
   targetNamespace: istio-system-canary
   interval: 1m
   values:
+    operatorNamespace: istio-system-canary
+    watchedNamespaces: istio-system-canary
     revision: "1-18-7"
     hub: gcr.io/istio-release
     tag: 1.18.7
