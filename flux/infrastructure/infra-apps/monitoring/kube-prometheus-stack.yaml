@@ -24,11 +24,16 @@ spec:
     prometheus:
       prometheusSpec:
         enableRemoteWriteReceiver: true
-        enableFeatures:
-          - exemplar-storage
+#        enableFeatures:
+#          - exemplar-storage
         podMonitorSelector:
-          matchLabels:
-            app: strimzi
+          matchExpressions:
+            - key: app
+              operator: NotIn
+              values:
+                - istiod
+                - strimzi
+                - kminion
         retention: 1h
         resources:
           requests:

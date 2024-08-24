@@ -10,8 +10,8 @@ spec:
     pilot:
       k8s:
         hpaSpec:
-          maxReplicas: 6
-          minReplicas: 2
+          maxReplicas: 2
+          minReplicas: 1
           behavior:
             scaleDown:
               policies:
@@ -36,8 +36,8 @@ spec:
         enabled: true
         k8s:
           hpaSpec:
-            minReplicas: 2
-            maxReplicas: 5
+            minReplicas: 1
+            maxReplicas: 2
             behavior:
               scaleDown:
                 policies:
