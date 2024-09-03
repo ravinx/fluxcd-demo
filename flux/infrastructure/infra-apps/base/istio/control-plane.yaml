@@ -16,7 +16,8 @@ spec:
       holdApplicationUntilProxyStarts: true
       tracing:
         sampling: 1.0  # Set sampling to 100% to capture all traces
-
+    accessLogFile: /dev/stdout
+    enableTracing: true
   components:
     pilot:
       k8s:
@@ -81,8 +82,127 @@ spec:
   values:
     telemetry:
       v2:
-        enabled: true
         prometheus:
-          enabled: true
+          configOverride:
+            inboundSidecar:
+              disable_host_header_fallback: true
+              metrics:
+              - name: request_bytes
+                tags_to_remove:
+                - destination_canonical_service
+                - destination_canonical_revision
+                - destination_cluster
+                - destination_principal
+                - destination_service
+                - destination_service_name
+                - destination_version
+                - pod
+                - pod_name
+                - source_canonical_service
+                - source_canonical_revision
+                - source_version
+              - name: request_duration
+                tags_to_remove:
+                - destination_canonical_service
+                - destination_canonical_revision
+                - destination_cluster
+                - destination_principal
+                - destination_service
+                - destination_service_name
+                - destination_version
+                - pod
+                - pod_name
+                - source_canonical_service
+                - source_canonical_revision
+                - source_version
+              - name: response_bytes
+                tags_to_remove:
+                - destination_canonical_service
+                - destination_canonical_revision
+                - destination_cluster
+                - destination_principal
+                - destination_service
+                - destination_service_name
+                - destination_version
+                - pod
+                - pod_name
+                - source_canonical_service
+                - source_canonical_revision
+                - source_version
+              - name: requests_total
+                tags_to_remove:
+                - destination_canonical_service
+                - destination_canonical_revision
+                - destination_cluster
+                - destination_principal
+                - destination_service
+                - destination_service_name
+                - destination_version
+                - pod
+                - pod_name
+                - source_canonical_service
+                - source_canonical_revision
+                - source_version
+            outboundSidecar:
+              disable_host_header_fallback: true
+              metrics:
+              - name: request_bytes
+                tags_to_remove:
+                - destination_canonical_service
+                - destination_canonical_revision
+                - destination_cluster
+                - destination_principal
+                - destination_service
+                - destination_service_name
+                - destination_version
+                - pod
+                - pod_name
+                - source_canonical_service
+                - source_canonical_revision
+                - source_version
+              - name: request_duration
+                tags_to_remove:
+                - destination_canonical_service
+                - destination_canonical_revision
+                - destination_cluster
+                - destination_principal
+                - destination_service
+                - destination_service_name
+                - destination_version
+                - pod
+                - pod_name
+                - source_canonical_service
+                - source_canonical_revision
+                - source_version
+              - name: response_bytes
+                tags_to_remove:
+                - destination_canonical_service
+                - destination_canonical_revision
+                - destination_cluster
+                - destination_principal
+                - destination_service
+                - destination_service_name
+                - destination_version
+                - pod
+                - pod_name
+                - source_canonical_service
+                - source_canonical_revision
+                - source_version
+              - name: requests_total
+                tags_to_remove:
+                - destination_canonical_service
+                - destination_canonical_revision
+                - destination_cluster
+                - destination_principal
+                - destination_service
+                - destination_service_name
+                - destination_version
+                - pod
+                - pod_name
+                - source_canonical_service
+                - source_canonical_revision
+                - source_version
+            gateway:
+              disable_host_header_fallback: true
     global:
       istioNamespace: istio-system
