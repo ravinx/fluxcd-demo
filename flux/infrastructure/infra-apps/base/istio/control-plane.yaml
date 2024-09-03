@@ -82,7 +82,9 @@ spec:
   values:
     telemetry:
       v2:
+        enabled: true
         prometheus:
+          enabled: true
           configOverride:
             inboundSidecar:
               disable_host_header_fallback: true
