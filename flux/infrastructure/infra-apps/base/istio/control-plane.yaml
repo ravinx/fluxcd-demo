@@ -77,8 +77,8 @@ spec:
             requests:
               cpu: 700m # all other values are defaults, this was raised to reduce automatic HPA trigger and 100% usage
               memory: 128Mi
-    telemetry:
-      enabled: true
+#    telemetry:
+#      enabled: true
   values:
     telemetry:
       v2:
