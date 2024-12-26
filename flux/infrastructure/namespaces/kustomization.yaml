@@ -1,12 +1,12 @@
 resources:
 - istio.yaml
 #- istio-canary.yaml
-- external-secrets.yaml
-- keda.yaml
-- crossplane.yaml
-- redis.yaml
-- monitoring.yaml
-- strimzi.yaml
-- kafka.yaml
-- flagger.yaml
-- test-deployment.yaml
+# - external-secrets.yaml
+# - keda.yaml
+# - crossplane.yaml
+# - redis.yaml
+# - monitoring.yaml
+# - strimzi.yaml
+# - kafka.yaml
+# - flagger.yaml
+# - test-deployment.yaml

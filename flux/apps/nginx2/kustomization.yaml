@@ -1,3 +1,0 @@
-namespace: nginx
-resources:
-- nginx2.yaml

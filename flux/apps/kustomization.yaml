@@ -1,5 +1,0 @@
-resources:
-#- nginx
-#- nginx2
-#- apache
-- nginx-app

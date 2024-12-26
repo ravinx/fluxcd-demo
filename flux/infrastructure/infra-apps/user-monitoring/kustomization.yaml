@@ -1,7 +1,0 @@
-namespace: user-monitoring
-resources:
-#- flux-podmonitor.yaml
-- kube-prometheus-stack.yaml
-#- mimir.yaml
-#- opentelemetry-collector.yaml
-#- tempo-distributed.yaml
