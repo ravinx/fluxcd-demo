@@ -7,9 +7,9 @@ metadata:
 spec:
   interval: 5m
   values:
-  manager:
-    image:
-      repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
+    manager:
+      image:
+        repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
   chart:
     spec:
       version: "0.78.1"
