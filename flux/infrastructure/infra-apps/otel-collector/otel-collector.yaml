@@ -1,0 +1,138 @@
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: otel-collector-agent
+  namespace: monitoring
+spec:
+  mode: daemonset
+  config:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+    processors:
+      memory_limiter:
+        check_interval: 1s
+        limit_percentage: 75
+        spike_limit_percentage: 15
+      batch:
+        send_batch_size: 1000
+        timeout: 10s
+
+    exporters:
+      debug: {}
+
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [debug]
+
+# ---
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: ClusterRole
+# metadata:
+#   name: otel-k8s-cluster-metrics-collector
+# rules:
+#   - apiGroups:
+#       - ''
+#     resources:
+#       - events
+#       - namespaces
+#       - namespaces/status
+#       - nodes
+#       - nodes/proxy
+#       - nodes/spec
+#       - nodes/stats
+#       - nodes/metrics
+#       - services
+#       - endpoints
+#       - replicationcontrollers
+#       - replicationcontrollers/status
+#       - resourcequotas
+#       - pods
+#       - pods/status
+#     verbs: ["get", "list", "watch"]
+#   - apiGroups:
+#       - apps
+#     resources:
+#       - daemonsets
+#       - deployments
+#       - replicasets
+#       - statefulsets
+#     verbs:
+#       - get
+#       - list
+#       - watch
+#   - apiGroups: 
+#       - "monitoring.coreos.com"
+#     resources:
+#       - servicemonitors
+#       - podmonitors
+#     verbs: ["get", "list", "watch"]
+#   - apiGroups:
+#       - extensions
+#     resources:
+#       - ingresses
+#       - daemonsets
+#       - deployments
+#       - replicasets
+#     verbs: ["get", "list", "watch"]
+#   - apiGroups:
+#       - networking.k8s.io
+#     resources:
+#       - ingresses
+#     verbs: ["get", "list", "watch"]
+#   - apiGroups: 
+#       - "discovery.k8s.io"
+#     resources:
+#       - endpointslices
+#     verbs: ["get", "list", "watch"]
+#   - apiGroups:
+#       - batch
+#     resources:
+#       - jobs
+#       - cronjobs
+#     verbs:
+#       - get
+#       - list
+#       - watch
+#   - apiGroups:
+#       - autoscaling
+#     resources:
+#       - horizontalpodautoscalers
+#     verbs:
+#       - get
+#       - list
+#       - watch
+#   - nonResourceURLs: ["/metrics", "/metrics/cadvisor"]
+#     verbs: ["get"]
+
+# ---
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: ClusterRoleBinding
+# metadata:
+#   name: otel-k8s-cluster-metrics-collector
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: ClusterRole
+#   name: otel-k8s-cluster-metrics-collector
+# subjects:
+#   - kind: ServiceAccount
+#     # quirk of the Operator
+#     name: otel-k8s-cluster-metrics-collector
+#     namespace: observability-backend
+#   - kind: ServiceAccount
+#     name: otel-k8s-cluster-metrics-targetallocator
+#     namespace: observability-backend
+
+# ---
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: otel-k8s-cluster-metrics-collector
+#   namespace: observability-backend
