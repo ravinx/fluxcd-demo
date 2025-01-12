@@ -11,7 +11,8 @@ spec:
       image:
         repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
       collectorImage:
-        repository: ghcr.io/open-telemetry/opentelemetry-collector
+        repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
+        tag: 0.117.0
   chart:
     spec:
       version: "0.78.1"
