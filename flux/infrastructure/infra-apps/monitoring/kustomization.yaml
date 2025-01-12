@@ -1,5 +1,7 @@
 namespace: monitoring
 resources:
+- otel-operator
+- otel-collector
 - flux-podmonitor.yaml
 - kube-prometheus-stack.yaml
 #- mimir.yaml

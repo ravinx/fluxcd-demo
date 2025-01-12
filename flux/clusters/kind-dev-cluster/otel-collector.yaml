@@ -10,7 +10,7 @@ spec:
     - name: namespaces
     - name: otel-operator
   interval: 2m0s
-  path: ./flux/infrastructure/infra-apps/otel-collector
+  path: ./flux/infrastructure/infra-apps/monitoring/otel-collector
   prune: true
   sourceRef:
     kind: GitRepository
