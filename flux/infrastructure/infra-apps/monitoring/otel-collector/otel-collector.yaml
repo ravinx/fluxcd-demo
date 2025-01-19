@@ -26,12 +26,7 @@ spec:
     exporters:
       debug: {}
       otlp:
-          grpc:
-            endpoint: "tempo-distributed-distributor:4317"
-          http:
-            endpoint: "tempo-distributed-distributor:4318"
-      # oltp:
-      #   endpoint: "tempo-distributed-distributor:4317"
+        endpoint: "tempo-distributed-distributor:4317"
 
     service:
       pipelines:
