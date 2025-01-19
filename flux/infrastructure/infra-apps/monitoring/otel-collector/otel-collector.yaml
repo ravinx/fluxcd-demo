@@ -1,7 +1,7 @@
 apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
-  name: otel-collector-agent
+  name: otel-agent
   namespace: monitoring
 spec:
   # image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.117.0
@@ -25,13 +25,15 @@ spec:
 
     exporters:
       debug: {}
+      oltp:
+        endpoint: "tempo-distributed-distributor:4317"
 
     service:
       pipelines:
         traces:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [debug]
+          exporters: [debug, oltp]
 
 # ---
 # apiVersion: rbac.authorization.k8s.io/v1

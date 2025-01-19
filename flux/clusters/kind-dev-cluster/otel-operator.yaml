@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: helm-repositories-opentelemetry
     - name: namespaces
+    - name: external-secrets
   interval: 2m0s
   path: ./flux/infrastructure/infra-apps/monitoring/otel-operator
   prune: true
