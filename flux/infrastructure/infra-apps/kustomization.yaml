@@ -1,5 +1,5 @@
 resources:
 - external-secrets
-- keda
-#- istio-operator
-- crossplane
+# - monitoring
+- otel-operator
+- otel-collector
