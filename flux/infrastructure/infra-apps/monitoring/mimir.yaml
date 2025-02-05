@@ -15,7 +15,7 @@ spec:
       structuredConfig:
         no_auth_tenant: fake
         limits:
-          ingestion_rate: 150000
+          ingestion_rate: 2000000
           max_global_series_per_user: 0
           max_global_series_per_metric: 0
           max_label_names_per_series: 100
