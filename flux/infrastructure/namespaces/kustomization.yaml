@@ -6,7 +6,7 @@ resources:
 # - crossplane.yaml
 # - redis.yaml
 # - monitoring.yaml
-# - strimzi.yaml
+- strimzi.yaml
 - kafka.yaml
 # - flagger.yaml
 # - test-deployment.yaml
