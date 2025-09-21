@@ -19,5 +19,5 @@ spec:
   brokers:
     - 1
     - 2  # Broker ID of a new broker
-    - 3  # Broker ID of another new broker
-    - 4
+    # - 3  # Broker ID of another new broker
+    # - 4

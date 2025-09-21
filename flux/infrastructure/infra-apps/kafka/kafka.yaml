@@ -58,10 +58,10 @@ spec:
   zookeeper:
     resources:
       requests:
-        memory: "512Mi"
+        memory: "256Mi"
         cpu: "50m"
       limits:
-        memory: "1Gi"
+        memory: "512Mi"
     replicas: 1
     storage:
       type: persistent-claim
@@ -87,10 +87,10 @@ spec:
       outboundNetwork: 1GiB/s
     resources:
       requests:
-        memory: "512Mi"
+        memory: "256Mi"
         cpu: "20m"
       limits:
-        memory: "1Gi"
+        memory: "512Mi"
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:
