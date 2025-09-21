@@ -4,7 +4,7 @@ metadata:
   name: dev
   annotations:
     strimzi.io/node-pools: enabled
-    strimzi.io/kraft: disabled
+    strimzi.io/kraft: migration
   labels:
     app.kubernetes.io/name: kafka
 spec:
