@@ -1,74 +1,74 @@
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: helm-repositories-istio
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/infrastructure/sources/istio
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: dev
-  wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: helm-repositories-istio
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   path: ./flux/infrastructure/sources/istio
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: dev
+#   wait: true
 
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: helm-repositories-bitnami
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/infrastructure/sources/bitnami
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: dev
-  wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: helm-repositories-external-secrets
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/infrastructure/sources/external-secrets
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: dev
-  wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: helm-repositories-crossplane
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/infrastructure/sources/crossplane
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: dev
-  wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: helm-repositories-keda
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/infrastructure/sources/keda
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: dev
-  wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: helm-repositories-bitnami
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   path: ./flux/infrastructure/sources/bitnami
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: dev
+#   wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: helm-repositories-external-secrets
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   path: ./flux/infrastructure/sources/external-secrets
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: dev
+#   wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: helm-repositories-crossplane
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   path: ./flux/infrastructure/sources/crossplane
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: dev
+#   wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: helm-repositories-keda
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   path: ./flux/infrastructure/sources/keda
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: dev
+#   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -97,20 +97,20 @@ spec:
     kind: GitRepository
     name: dev
   wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: helm-repositories-opentelemetry
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/infrastructure/sources/opentelemetry
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: dev
-  wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: helm-repositories-opentelemetry
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   path: ./flux/infrastructure/sources/opentelemetry
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: dev
+#   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -125,31 +125,31 @@ spec:
     kind: GitRepository
     name: dev
   wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: helm-repositories-flagger
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/infrastructure/sources/flagger
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: dev
-  wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: helm-repositories-test
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./flux/infrastructure/sources/test-repo
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: dev
-  wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: helm-repositories-flagger
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   path: ./flux/infrastructure/sources/flagger
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: dev
+#   wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: helm-repositories-test
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   path: ./flux/infrastructure/sources/test-repo
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: dev
+#   wait: true
