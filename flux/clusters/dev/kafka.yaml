@@ -1,19 +1,19 @@
-#apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-#kind: Kustomization
-#metadata:
-#  name: strimzi-podmonitor
-#  namespace: flux-system
-#spec:
-#  dependsOn:
-#    - name: namespaces
-#    - name: strimzi-kafka
-#  interval: 10m0s
-#  path: ./flux/infrastructure/infra-apps/monitoring/strimzi-podmonitor
-#  prune: true
-#  sourceRef:
-#    kind: GitRepository
-#    name: dev
-#  wait: true
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+ name: strimzi-podmonitor
+ namespace: flux-system
+spec:
+ dependsOn:
+   - name: namespaces
+   - name: strimzi-kafka
+ interval: 10m0s
+ path: ./flux/infrastructure/infra-apps/monitoring/strimzi-podmonitor
+ prune: true
+ sourceRef:
+   kind: GitRepository
+   name: dev
+ wait: true
 #---
 #apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 #kind: Kustomization
