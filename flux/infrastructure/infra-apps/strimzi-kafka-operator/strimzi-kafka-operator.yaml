@@ -19,7 +19,7 @@ spec:
       - kafka
   chart:
     spec:
-      version: "0.44.0"
+      version: "0.40.0"
       chart: strimzi-kafka-operator
       sourceRef:
         kind: HelmRepository
