@@ -3,7 +3,7 @@ resources:
   - kafka-proxy.yaml
   - kafka-monitoring-cm.yaml
   - kafka-topic.yaml
-  - kafkanodepool.yaml
+  # - kafkanodepool.yaml
   - kafka-nodepool-b.yaml
   # - kraft-controller-nodepool.yaml
 namespace: strimzi-operator
