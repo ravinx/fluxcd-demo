@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: kafka
 spec:
   kafka:
-    version: 3.7.0
+    version: 3.8.0
     template:
       pod:
         terminationGracePeriodSeconds: 300
