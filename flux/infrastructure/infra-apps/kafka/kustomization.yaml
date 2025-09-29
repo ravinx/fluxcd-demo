@@ -5,5 +5,5 @@ resources:
   - kafka-topic.yaml
   # - kafkanodepool.yaml
   - kafka-nodepool-b.yaml
-  # - kraft-controller-nodepool.yaml
+  - kraft-controller-nodepool.yaml
 namespace: strimzi-operator
