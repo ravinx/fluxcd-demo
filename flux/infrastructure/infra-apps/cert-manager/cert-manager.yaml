@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+spec:
+  interval: 5m
+  values:
+    webhook:
+      resources:
+        requests:
+          memory: 20Mi
+          cpu: 0.001
+        limits:
+          memory: 20Mi
+    cainjector:
+      resources:
+        requests:
+          memory: 250Mi
+          cpu: 0.005
+        limits:
+          memory: 250Mi
+    installCRDs: true
+    prometheus:
+      enabled: true
+      prometheusInstance: k8s
+      labels:
+        app: cert-manager
+      servicemonitor:
+        enabled: true
+        namespace: "monitoring"
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: dev-dns01-solver@eon-iotcore-dev-202411.iam.gserviceaccount.com
+    extraArgs:
+      - --issuer-ambient-credentials=true
+    resources:
+      requests:
+        memory: 400Mi
+        cpu: 0.05
+      limits:
+        memory: 400Mi
+  chart:
+    spec:
+      version: "v1.10.1"
+      chart: cert-manager
+      sourceRef:
+        kind: HelmRepository
+        name: jetstack
+        namespace: flux-system
+      interval: 5m

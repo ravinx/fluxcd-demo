@@ -1,141 +1,306 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: otel-k8s-cluster-metrics-collector
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - events
+      - namespaces
+      - namespaces/status
+      - nodes
+      - nodes/proxy
+      - nodes/spec
+      - nodes/stats
+      - nodes/metrics
+      - services
+      - endpoints
+      - replicationcontrollers
+      - replicationcontrollers/status
+      - resourcequotas
+      - pods
+      - pods/status
+      - secrets
+      - configmaps
+    verbs: ["get", "list", "watch"]
+  - apiGroups:
+      - apps
+    resources:
+      - daemonsets
+      - deployments
+      - replicasets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "monitoring.coreos.com"
+    resources:
+      - servicemonitors
+      - podmonitors
+    verbs: ["get", "list", "watch"]
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+      - daemonsets
+      - deployments
+      - replicasets
+    verbs: ["get", "list", "watch"]
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - ingresses
+    verbs: ["get", "list", "watch"]
+  - apiGroups:
+      - "discovery.k8s.io"
+    resources:
+      - endpointslices
+    verbs: ["get", "list", "watch"]
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+      - cronjobs
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - get
+      - list
+      - watch
+  - nonResourceURLs: ["/metrics", "/metrics/cadvisor"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: otel-k8s-cluster-metrics-collector
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: otel-k8s-cluster-metrics-collector
+subjects:
+  - kind: ServiceAccount
+    # quirk of the Operator
+    name: otel-k8s-cluster-metrics-collector
+    namespace: monitoring
+  - kind: ServiceAccount
+    name: otel-k8s-cluster-metrics-targetallocator
+    namespace: monitoring
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: otel-k8s-cluster-metrics-collector
+  namespace: monitoring
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: otel-k8s-cluster-metrics-targetallocator
+  namespace: monitoring
+
+#---
+#apiVersion: opentelemetry.io/v1beta1
+#kind: OpenTelemetryCollector
+#metadata:
+#  name: otel-agent
+#  namespace: monitoring
+#spec:
+#  # image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.117.0
+#  mode: daemonset
+#  config:
+#    receivers:
+#      otlp:
+#        protocols:
+#          grpc:
+#            endpoint: 0.0.0.0:4317
+#          http:
+#            endpoint: 0.0.0.0:4318
+#    processors:
+#      memory_limiter:
+#        check_interval: 1s
+#        limit_percentage: 75
+#        spike_limit_percentage: 15
+#      batch:
+#        send_batch_size: 1000
+#        timeout: 10s
+#
+#    exporters:
+#      debug: {}
+#      otlp:
+#        endpoint: "tempo-distributed-distributor:4317"
+#
+#    service:
+#      pipelines:
+#        traces:
+#          receivers: [otlp]
+#          processors: [memory_limiter, batch]
+#          exporters: [debug, otlp]
+
+---
 apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
-  name: otel-agent
+  name: otel-k8s-cluster-metrics
   namespace: monitoring
 spec:
-  # image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.117.0
-  mode: daemonset
+  image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.107.0
+  mode: statefulset
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 20m
+      memory: 256Mi
+  replicas: 3
+  serviceAccount: otel-k8s-cluster-metrics-collector
+  targetAllocator:
+    enabled: true
+    serviceAccount: otel-k8s-cluster-metrics-targetallocator
+    allocationStrategy: "consistent-hashing"
+    replicas: 1
+    image: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator:0.107.0
+    prometheusCR:
+      # filterStrategy: relabel-config
+      enabled: true
+      podMonitorSelector: {}
+      serviceMonitorSelector: {}
+  env:
+  - name: K8S_NODE_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName
+  - name: OTEL_RESOURCE_ATTRIBUTES
+    value: k8s.node.name=$(K8S_NODE_NAME)
+  volumeMounts:
+    - name: hostfs
+      mountPath: /hostfs
+      readOnly: true
+      mountPropagation: HostToContainer
+  volumes:
+    - name: hostfs
+      hostPath:
+        path: /
+  ports:
+    - port: 8888
+      protocol: TCP
+      name: metrics
   config:
     receivers:
-      otlp:
-        protocols:
-          grpc:
-            endpoint: 0.0.0.0:4317
-          http:
-            endpoint: 0.0.0.0:4318
+      prometheus:
+        config:
+          global:
+            scrape_interval: 30s
+            scrape_timeout: 10s
+          scrape_configs:
+#          - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+#            job_name: cadvisor
+#            kubernetes_sd_configs:
+#              - role: node
+#            relabel_configs:
+#              - replacement: kubernetes.default.svc.cluster.local:443
+#                target_label: __address__
+#              - regex: (.+)
+#                replacement: /api/v1/nodes/$${1}/proxy/metrics/cadvisor
+#                source_labels:
+#                  - __meta_kubernetes_node_name
+#                target_label: __metrics_path__
+#            metric_relabel_configs:
+#              - source_labels: [__name__]
+#                action: keep
+#                regex: 'container_cpu_cfs_periods_total|container_cpu_cfs_throttled_periods_total|container_cpu_usage_seconds_total|container_fs_reads_bytes_total|container_fs_reads_total|container_fs_writes_bytes_total|container_fs_writes_total|container_memory_cache|container_memory_rss|container_memory_swap|container_memory_working_set_bytes|container_network_receive_bytes_total|container_network_receive_packets_dropped_total|container_network_receive_packets_total|container_network_transmit_bytes_total|container_network_transmit_packets_dropped_total|container_network_transmit_packets_total|machine_memory_bytes'
+#            scheme: https
+#            tls_config:
+#              ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+#              insecure_skip_verify: false
+#              server_name: kubernetes
+#          - job_name: kubelet
+#            bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+#            kubernetes_sd_configs:
+#              - role: node
+#            relabel_configs:
+#              - regex: __meta_kubernetes_node_label_cloud_(.+)
+#                action: labeldrop
+#              - replacement: kubernetes.default.svc.cluster.local:443
+#                target_label: __address__
+#              - regex: (.+)
+#                replacement: /api/v1/nodes/$${1}/proxy/metrics
+#                source_labels:
+#                  - __meta_kubernetes_node_name
+#                target_label: __metrics_path__
+#            metric_relabel_configs:
+#              - source_labels: [__name__]
+#                action: keep
+#                regex: 'container_network_receive_bytes_total|container_cpu_usage_seconds_total|kubelet_certificate_manager_client_expiration_renew_errors|kubelet_certificate_manager_client_ttl_seconds|kubelet_certificate_manager_server_ttl_seconds|kubelet_cgroup_manager_duration_seconds_bucket|kubelet_cgroup_manager_duration_seconds_count|kubelet_node_config_error|kubelet_node_name|kubelet_pleg_relist_duration_seconds_bucket|kubelet_pleg_relist_duration_seconds_count|kubelet_pleg_relist_interval_seconds_bucket|kubelet_pod_start_duration_seconds_bucket|kubelet_pod_start_duration_seconds_count|kubelet_pod_worker_duration_seconds_bucket|kubelet_pod_worker_duration_seconds_count|kubelet_running_container_count|kubelet_running_containers|kubelet_running_pod_count|kubelet_running_pods|kubelet_runtime_operations_errors_total|kubelet_runtime_operations_total|kubelet_server_expiration_renew_errors|kubelet_volume_stats_available_bytes|kubelet_volume_stats_capacity_bytes|kubelet_volume_stats_inodes|kubelet_volume_stats_inodes_used|kubernetes_build_info|namespace_workload_pod|rest_client_requests_total|storage_operation_duration_seconds_count|storage_operation_errors_total|volume_manager_total_volumes'
+#            scheme: https
+#            tls_config:
+#              ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+#              insecure_skip_verify: false
+#              server_name: kubernetes
+          - job_name: apiserver
+            authorization:
+              credentials_file: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+              type: Bearer
+            honor_labels: true
+            honor_timestamps: true
+            kubernetes_sd_configs:
+            - follow_redirects: true
+              kubeconfig_file: ''
+              role: endpoints
+            metrics_path: "/metrics"
+            follow_redirects: true
+            relabel_configs:
+            - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+              separator: ;
+              regex: default;kubernetes;https
+              replacement: $$1
+              action: keep
+            scheme: https
+            tls_config:
+              ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+              insecure_skip_verify: true
+        target_allocator:
+          endpoint: http://otel-k8s-cluster-metrics-targetallocator:80
+          interval: 30s
+          collector_id: ${POD_NAME}
+          http_sd_config:
+            refresh_interval: 60s
+
     processors:
-      memory_limiter:
-        check_interval: 1s
-        limit_percentage: 75
-        spike_limit_percentage: 15
       batch:
-        send_batch_size: 1000
-        timeout: 10s
+        send_batch_size: 500
+        timeout: 1s
+        send_batch_max_size: 1000
+      memory_limiter:
+        check_interval: 5s
+        limit_percentage: 50
+        spike_limit_percentage: 10
+      resourcedetection/env:
+        detectors:
+        - env
 
     exporters:
-      debug: {}
-      otlp:
-        endpoint: "tempo-distributed-distributor:4317"
-
+      debug:
+        verbosity: basic
+      prometheusremotewrite:
+        endpoint: "http://mimir-nginx.mimir-test.svc/api/v1/push"
+        resource_to_telemetry_conversion:
+          enabled: false
     service:
       pipelines:
-        traces:
-          receivers: [otlp]
-          processors: [memory_limiter, batch]
-          exporters: [debug, otlp]
-
-# ---
-# apiVersion: rbac.authorization.k8s.io/v1
-# kind: ClusterRole
-# metadata:
-#   name: otel-k8s-cluster-metrics-collector
-# rules:
-#   - apiGroups:
-#       - ''
-#     resources:
-#       - events
-#       - namespaces
-#       - namespaces/status
-#       - nodes
-#       - nodes/proxy
-#       - nodes/spec
-#       - nodes/stats
-#       - nodes/metrics
-#       - services
-#       - endpoints
-#       - replicationcontrollers
-#       - replicationcontrollers/status
-#       - resourcequotas
-#       - pods
-#       - pods/status
-#     verbs: ["get", "list", "watch"]
-#   - apiGroups:
-#       - apps
-#     resources:
-#       - daemonsets
-#       - deployments
-#       - replicasets
-#       - statefulsets
-#     verbs:
-#       - get
-#       - list
-#       - watch
-#   - apiGroups: 
-#       - "monitoring.coreos.com"
-#     resources:
-#       - servicemonitors
-#       - podmonitors
-#     verbs: ["get", "list", "watch"]
-#   - apiGroups:
-#       - extensions
-#     resources:
-#       - ingresses
-#       - daemonsets
-#       - deployments
-#       - replicasets
-#     verbs: ["get", "list", "watch"]
-#   - apiGroups:
-#       - networking.k8s.io
-#     resources:
-#       - ingresses
-#     verbs: ["get", "list", "watch"]
-#   - apiGroups: 
-#       - "discovery.k8s.io"
-#     resources:
-#       - endpointslices
-#     verbs: ["get", "list", "watch"]
-#   - apiGroups:
-#       - batch
-#     resources:
-#       - jobs
-#       - cronjobs
-#     verbs:
-#       - get
-#       - list
-#       - watch
-#   - apiGroups:
-#       - autoscaling
-#     resources:
-#       - horizontalpodautoscalers
-#     verbs:
-#       - get
-#       - list
-#       - watch
-#   - nonResourceURLs: ["/metrics", "/metrics/cadvisor"]
-#     verbs: ["get"]
-
-# ---
-# apiVersion: rbac.authorization.k8s.io/v1
-# kind: ClusterRoleBinding
-# metadata:
-#   name: otel-k8s-cluster-metrics-collector
-# roleRef:
-#   apiGroup: rbac.authorization.k8s.io
-#   kind: ClusterRole
-#   name: otel-k8s-cluster-metrics-collector
-# subjects:
-#   - kind: ServiceAccount
-#     # quirk of the Operator
-#     name: otel-k8s-cluster-metrics-collector
-#     namespace: observability-backend
-#   - kind: ServiceAccount
-#     name: otel-k8s-cluster-metrics-targetallocator
-#     namespace: observability-backend
-
-# ---
-# apiVersion: v1
-# kind: ServiceAccount
-# metadata:
-#   name: otel-k8s-cluster-metrics-collector
-#   namespace: observability-backend
+        metrics:
+          receivers: [prometheus]
+          processors: [resourcedetection/env, memory_limiter, batch]
+          exporters:
+             - debug
+             - prometheusremotewrite
